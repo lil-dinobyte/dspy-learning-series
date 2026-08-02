@@ -1,0 +1,25 @@
+{
+  "name": "dspy-dev",
+  "dockerComposeFile": ["../docker-compose.yml"],
+  "service": "app",
+  "workspaceFolder": "/workspace",
+  "shutdownAction": "stopCompose",
+  "remoteEnv": {
+    "DSPY_LM_BACKEND": "ollama",
+    "OLLAMA_BASE_URL": "http://ollama:11434",
+    "OLLAMA_MODEL": "llama3.2:latest"
+  },
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "python.defaultInterpreterPath": "/opt/venv/bin/python"
+      },
+      "extensions": [
+        "ms-python.python",
+        "ms-python.vscode-pylance",
+        "bierner.markdown-mermaid"
+      ]
+    }
+  },
+  "postCreateCommand": "uv sync --frozen"
+}

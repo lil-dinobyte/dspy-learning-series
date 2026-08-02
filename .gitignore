@@ -1,0 +1,47 @@
+# entornos
+.venv/
+.python-version
+
+# secretos y entorno local
+.env
+.env.*
+!.env.example
+.env.*.local
+
+# Jupyter
+.ipynb_checkpoints/
+**/.ipynb_checkpoints/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+.eggs/
+dist/
+build/
+
+# herramientas / IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# caches locales
+.uv-cache/
+.ruff_cache/
+.mypy_cache/
+.pytest_cache/
+.coverage
+htmlcov/
+.hypothesis/
+
+# logs
+*.log

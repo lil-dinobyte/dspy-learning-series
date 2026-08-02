@@ -1,0 +1,46 @@
+# Dev Container: Reopen in Container (servicio app + ollama)
+# Manual:       docker compose up --build -d
+
+services:
+  app:
+    build: .
+    working_dir: /workspace
+    volumes:
+      - .:/workspace
+    environment:
+      UV_PROJECT_ENVIRONMENT: /opt/venv
+      PYTHONPATH: /workspace/src
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      OLLAMA_BASE_URL: ${OLLAMA_BASE_URL:-http://ollama:11434}
+      DSPY_LM_BACKEND: ${DSPY_LM_BACKEND:-ollama}
+      OPENAI_MODEL: ${OPENAI_MODEL:-openai/gpt-4o-mini}
+      OLLAMA_MODEL: ${OLLAMA_MODEL:-llama3.2:latest}
+    depends_on:
+      - ollama
+    command: ["sleep", "infinity"]
+
+  ollama:
+    image: ollama/ollama:latest
+    volumes:
+      - ollama-data:/root/.ollama
+    ports:
+      - "11434:11434"
+    healthcheck:
+      test: ["CMD", "ollama", "list"]
+      interval: 5s
+      timeout: 10s
+      retries: 12
+      start_period: 10s
+
+  ollama-init:
+    image: ollama/ollama:latest
+    depends_on:
+      ollama:
+        condition: service_healthy
+    environment:
+      OLLAMA_HOST: http://ollama:11434
+    entrypoint: ["ollama", "pull", "${OLLAMA_MODEL:-llama3.2:latest}"]
+    restart: "no"
+
+volumes:
+  ollama-data:
