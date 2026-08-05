@@ -45,3 +45,7 @@ htmlcov/
 
 # logs
 *.log
+
+
+.cursor/
+
