@@ -49,3 +49,42 @@ htmlcov/
 
 .cursor/
 
+# Generated LLM outputs and evaluation results
+**/exports/
+
+
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# MLflow
+mlruns/
+mlartifacts/
+mlflow.db
+
+# Generated evaluations
+src/dspy/exports/
+src/tradicional/exports/
+dspy_evaluation_results.json
+judge_validation_results.json
+
+# IDE / local configuration
+.cursor/
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db

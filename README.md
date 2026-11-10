@@ -11,7 +11,7 @@ legal.**
 
 - Python 3.11+
 - [uv](https://docs.astral.sh/uv/)
-- Docker (para Dev Container / Ollama)
+- `OPENAI_API_KEY` en `.env` (recomendado), u [Ollama](https://ollama.com/) en el host si preferís modelo local
 
 ## Arranque rápido
 
@@ -21,24 +21,18 @@ legal.**
 cp .env.example .env
 ```
 
-2. **Preferido — Dev Container** (Docker + extensión Dev Containers en Cursor/VS Code):
+Completá `OPENAI_API_KEY` en `.env`.
 
-   Abre la carpeta del proyecto y ejecuta **Dev Containers: Reopen in Container**.
-
-   Eso levanta el servicio `app` (Python + DSPy) y `ollama`. Al primer arranque,
-   `ollama-init` descarga el modelo definido en `OLLAMA_MODEL`.
-
-3. **Alternativa — local en el host:**
+2. **Local (recomendado):**
 
 ```sh
 uv sync
 ```
 
-Si usas Ollama en el host, en `.env` apunta a:
+3. **Opcional — Dev Container** (solo entorno Python; sin Ollama en Docker):
 
-```env
-OLLAMA_BASE_URL=http://localhost:11434
-```
+   Abrí la carpeta y ejecutá **Dev Containers: Reopen in Container**.
+   La API key se lee desde tu `.env` del host vía Compose.
 
 ## Configuración del LLM
 
@@ -46,10 +40,9 @@ Variables principales (ver [`.env.example`](.env.example)):
 
 | Variable | Descripción |
 |----------|-------------|
-| `DSPY_LM_BACKEND` | `ollama` (default del lab) u `openai` |
-| `OLLAMA_BASE_URL` | `http://ollama:11434` en Compose/Dev Container; `http://localhost:11434` en el host |
-| `OLLAMA_MODEL` | Modelo local (p. ej. `llama3.2:latest`) |
-| `OPENAI_API_KEY` / `OPENAI_MODEL` | Solo si usas el backend OpenAI |
+| `DSPY_LM_BACKEND` | `openai` (default) u `ollama` |
+| `OPENAI_API_KEY` / `OPENAI_MODEL` | Backend OpenAI vía LiteLLM |
+| `OLLAMA_BASE_URL` / `OLLAMA_MODEL` | Solo si `DSPY_LM_BACKEND=ollama` y Ollama corre en el host (`http://localhost:11434`) |
 
 En los notebooks, el punto de entrada es [`src/lm_config.py`](src/lm_config.py):
 
@@ -73,11 +66,10 @@ docs/                      # Roadmap y notas de arquitectura futura
 1. Abrí [`src/getting_started.ipynb`](src/getting_started.ipynb).
 2. Asegurate de que el LM esté configurado (`configure_lm`) antes de ejecutar predicciones.
 
-### Smoke check con Compose
+### Smoke check con Compose (opcional)
 
 ```sh
 docker compose up --build -d
-curl http://localhost:11434/api/tags
 docker compose exec app python -c "import dspy; print(dspy.__version__)"
 ```
 

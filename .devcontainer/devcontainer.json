@@ -5,9 +5,8 @@
   "workspaceFolder": "/workspace",
   "shutdownAction": "stopCompose",
   "remoteEnv": {
-    "DSPY_LM_BACKEND": "ollama",
-    "OLLAMA_BASE_URL": "http://ollama:11434",
-    "OLLAMA_MODEL": "llama3.2:latest"
+    "DSPY_LM_BACKEND": "openai",
+    "OPENAI_MODEL": "openai/gpt-4o-mini"
   },
   "customizations": {
     "vscode": {
